@@ -1,4 +1,6 @@
 package com.training.jmp.service;
 
-public class SubscriptionService {
+import com.training.jmp.entity.Subscription;
+
+public interface SubscriptionService extends GenericService<Subscription, Long> {
 }

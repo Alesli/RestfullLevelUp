@@ -1,4 +1,6 @@
 package com.training.jmp.service;
 
-public interface UserService {
+import com.training.jmp.entity.User;
+
+public interface UserService extends GenericService<User, Long> {
 }
