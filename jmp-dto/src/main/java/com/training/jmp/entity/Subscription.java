@@ -1,9 +1,7 @@
 package com.training.jmp.entity;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -11,7 +9,8 @@ import java.time.LocalDate;
 @Entity
 @Getter
 @Setter
-@RequiredArgsConstructor
+@AllArgsConstructor
+@NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Subscription {
 
@@ -21,5 +20,7 @@ public class Subscription {
 
     @ManyToOne
     private User user;
+
+    @Column(name = "start_date")
     private LocalDate startDate;
 }
