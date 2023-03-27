@@ -15,7 +15,7 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping("/subscriptions")
+@RequestMapping("/level2/subscriptions")
 @AllArgsConstructor
 public class ServiceControllerImpl implements ServiceController {
     private final SubscriptionService subscriptionService;
@@ -25,10 +25,9 @@ public class ServiceControllerImpl implements ServiceController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<SubscriptionResponseDto> createSubscription(@RequestBody SubscriptionRequestDto subscriptionDto) {
-        var subscription = subscriptionMapper.toEntity(subscriptionDto);
-        var subscrEntity = subscriptionMapper.toDto(subscriptionService.save(subscription));
-        if (subscrEntity != null) {
-            URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(subscrEntity.getId()).toUri();
+        var subscription = subscriptionService.save(subscriptionDto);
+        if (subscription != null) {
+            URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(subscription.getId()).toUri();
             return ResponseEntity.created(location).build();
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -38,10 +37,9 @@ public class ServiceControllerImpl implements ServiceController {
     @Override
     @GetMapping("/{id}")
     public @ResponseBody ResponseEntity<SubscriptionResponseDto> getSubscription(@PathVariable("id") Long id) {
-        var subscription = subscriptionService.findById(id).orElse(null);
-        var subscrEntity = subscriptionMapper.toDto(subscription);
-        if (subscrEntity != null) {
-            return new ResponseEntity<>(subscrEntity, HttpStatus.OK);
+        var subscription = subscriptionService.findById(id);
+        if (subscription != null) {
+            return new ResponseEntity<>(subscription, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -50,7 +48,7 @@ public class ServiceControllerImpl implements ServiceController {
     @Override
     @GetMapping
     public ResponseEntity<List<SubscriptionResponseDto>> getAllSubscription() {
-        var subscriptions = subscriptionMapper.toDtoList(subscriptionService.findAll());
+        var subscriptions = subscriptionService.findAll();
         if (subscriptions != null && !subscriptions.isEmpty()) {
             return new ResponseEntity<>(subscriptions, HttpStatus.OK);
         } else {
@@ -71,10 +69,9 @@ public class ServiceControllerImpl implements ServiceController {
         if (subscriptionDto.getUserId() == null) {
             return ResponseEntity.badRequest().build();
         }
-        var subscription = subscriptionMapper.toEntity(subscriptionDto);
-        var subscrEntity = subscriptionMapper.toDto(subscriptionService.update(subscription, id));
-        if (subscrEntity != null) {
-            return new ResponseEntity<>(subscrEntity, HttpStatus.OK);
+        var subscription = subscriptionService.update(subscriptionDto, id);
+        if (subscription != null) {
+            return new ResponseEntity<>(subscription, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

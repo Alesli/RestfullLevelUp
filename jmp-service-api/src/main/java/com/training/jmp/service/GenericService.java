@@ -3,16 +3,14 @@ package com.training.jmp.service;
 import java.util.List;
 import java.util.Optional;
 
-public interface GenericService<E, M> {
-    E save(E entity);
-
-    List<E> save(List<E> entities);
+public interface GenericService<Q, R, M> {
+    R save(Q entity);
 
     void deleteById(M id);
 
-    Optional<E> findById(M id);
+    R findById(M id);
 
-    List<E> findAll();
+    List<R> findAll();
 
-    E update(E entity, M id);
+    R update(Q entity, M id);
 }
