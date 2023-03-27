@@ -11,11 +11,10 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface UserMapper {
 
-    @Mapping(target = "birthday", source = "birthday",
-            dateFormat = "dd-MM-yyyy HH:mm:ss")
+    @Mapping(target = "birthday", source = "birthday", dateFormat = "yyyy-MM-dd")
     User toEntity(UserRequestDto user);
 
-    @Mapping(target = "birthday", source = "birthday", dateFormat = "dd-MM-yyyy HH:mm:ss")
+    @Mapping(target = "birthday", source = "birthday", dateFormat = "yyyy-MM-dd")
     UserResponseDto toDto(User user);
 
     List<User> toEntityList(List<UserRequestDto> dtoList);
