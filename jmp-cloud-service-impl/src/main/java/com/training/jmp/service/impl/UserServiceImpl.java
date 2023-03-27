@@ -1,6 +1,9 @@
 package com.training.jmp.service.impl;
 
+import com.training.jmp.dto.UserRequestDto;
+import com.training.jmp.dto.UserResponseDto;
 import com.training.jmp.entity.User;
+import com.training.jmp.mapper.UserMapper;
 import com.training.jmp.repo.UserRepository;
 import com.training.jmp.service.UserService;
 import lombok.AllArgsConstructor;
@@ -15,15 +18,12 @@ import java.util.Optional;
 @AllArgsConstructor
 public class UserServiceImpl implements UserService {
     private final UserRepository repository;
+    private final UserMapper userMapper;
 
     @Override
-    public User save(User entity) {
-        return repository.save(entity);
-    }
-
-    @Override
-    public List<User> save(List<User> entities) {
-        return repository.saveAll(entities);
+    public UserResponseDto save(UserRequestDto userDto) {
+        var user = userMapper.toEntity(userDto);
+        return userMapper.toDto(repository.save(user));
     }
 
     @Override
@@ -32,20 +32,22 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<User> findById(Long id) {
-        return repository.findById(id);
+    public UserResponseDto findById(Long id) {
+        var user =  repository.findById(id).orElse(null);
+        return userMapper.toDto(user);
     }
 
     @Override
-    public List<User> findAll() {
-        return repository.findAll();
+    public List<UserResponseDto> findAll() {
+        return userMapper.toDtoList(repository.findAll());
     }
 
     @Override
-    public User update(User entity, Long id) {
-        Optional<User> optional = findById(id);
+    public UserResponseDto update(UserRequestDto userDto, Long id) {
+        Optional<User> optional = repository.findById(id);
         if (optional.isPresent()) {
-            return save(entity);
+            var user = userMapper.toEntity(userDto);
+            return userMapper.toDto(repository.save(user));
         }
         return null;
     }
