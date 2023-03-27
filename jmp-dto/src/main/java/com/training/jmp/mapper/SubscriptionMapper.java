@@ -15,7 +15,7 @@ public interface SubscriptionMapper {
     @Mapping(target = "user", source = "userId")
     Subscription toEntity(SubscriptionRequestDto subscriptionRequestDto);
 
-    @Mapping(target = "startDate", source = "startDate", dateFormat = "dd-MM-yyyy HH:mm:ss")
+    @Mapping(target = "startDate", source = "startDate", dateFormat = "yyyy-MM-dd")
     @Mapping(target = "userId", source = "user")
     SubscriptionResponseDto toDto(Subscription subscription);
 
