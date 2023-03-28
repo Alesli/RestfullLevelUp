@@ -1,9 +1,8 @@
-package com.training.jmp.service.rest.controller.impl;
+package com.training.jmp.service.controller;
 
-import com.training.jmp.dto.SubscriptionRequestDto;
-import com.training.jmp.dto.SubscriptionResponseDto;
+import com.training.jmp.service.dto.SubscriptionRequestDto;
+import com.training.jmp.service.dto.SubscriptionResponseDto;
 import com.training.jmp.service.SubscriptionService;
-import com.training.jmp.service.rest.controller.ServiceController;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -56,9 +55,13 @@ public class ServiceControllerImpl implements ServiceController {
 
     @Override
     @DeleteMapping("/{id}")
-    public ResponseEntity delete(@PathVariable("id") Long id) {
-        subscriptionService.deleteById(id);
-        return new ResponseEntity<>(HttpStatus.OK);
+    public ResponseEntity<?> delete(@PathVariable("id") Long id) {
+        var subscription = subscriptionService.deleteById(id);
+        if (subscription != null) {
+            return new ResponseEntity<>(subscription, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     @Override

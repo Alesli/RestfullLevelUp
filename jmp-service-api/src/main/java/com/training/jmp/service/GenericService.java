@@ -6,7 +6,7 @@ import java.util.Optional;
 public interface GenericService<Q, R, M> {
     R save(Q entity);
 
-    void deleteById(M id);
+    R deleteById(M id);
 
     R findById(M id);
 

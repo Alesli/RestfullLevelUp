@@ -1,4 +1,4 @@
-package com.training.jmp.dto;
+package com.training.jmp.service.dto;
 
 import lombok.Builder;
 import lombok.Data;
