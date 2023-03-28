@@ -1,11 +1,9 @@
-package com.training.jmp.service.rest.controller.impl;
+package com.training.jmp.service.controller;
 
-import com.training.jmp.dto.UserRequestDto;
-import com.training.jmp.dto.UserResponseDto;
+import com.training.jmp.service.dto.UserRequestDto;
+import com.training.jmp.service.dto.UserResponseDto;
 import com.training.jmp.service.UserService;
-import com.training.jmp.service.rest.controller.UserController;
 import lombok.AllArgsConstructor;
-import org.springframework.data.rest.core.annotation.RestResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,7 +12,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
 import java.util.List;
 
-@RequestMapping("/level2")
+@RequestMapping("/level2/users")
 @RestController
 @AllArgsConstructor
 public class UserControllerImpl implements UserController {
@@ -57,9 +55,13 @@ public class UserControllerImpl implements UserController {
 
     @Override
     @DeleteMapping("/{id}")
-    public ResponseEntity deleteUser(@PathVariable("id") Long id) {
-        userService.deleteById(id);
-        return new ResponseEntity<>(HttpStatus.OK);
+    public ResponseEntity<?> deleteUser(@PathVariable("id") Long id) {
+        var user = userService.deleteById(id);
+        if (user != null) {
+            return new ResponseEntity<>(user, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     @Override

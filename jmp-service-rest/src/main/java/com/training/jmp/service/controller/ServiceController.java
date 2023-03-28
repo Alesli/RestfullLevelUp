@@ -1,7 +1,7 @@
-package com.training.jmp.service.rest.controller;
+package com.training.jmp.service.controller;
 
-import com.training.jmp.dto.SubscriptionRequestDto;
-import com.training.jmp.dto.SubscriptionResponseDto;
+import com.training.jmp.service.dto.SubscriptionRequestDto;
+import com.training.jmp.service.dto.SubscriptionResponseDto;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;

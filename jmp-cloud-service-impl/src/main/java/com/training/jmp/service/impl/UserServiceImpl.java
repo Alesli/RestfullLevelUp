@@ -1,11 +1,11 @@
 package com.training.jmp.service.impl;
 
-import com.training.jmp.dto.UserRequestDto;
-import com.training.jmp.dto.UserResponseDto;
-import com.training.jmp.entity.User;
-import com.training.jmp.mapper.UserMapper;
-import com.training.jmp.repo.UserRepository;
 import com.training.jmp.service.UserService;
+import com.training.jmp.service.dto.UserRequestDto;
+import com.training.jmp.service.dto.UserResponseDto;
+import com.training.jmp.service.entity.User;
+import com.training.jmp.service.mapper.UserMapper;
+import com.training.jmp.service.repo.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -27,19 +27,25 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void deleteById(Long id) {
-        repository.deleteById(id);
+    public UserResponseDto deleteById(Long id) {
+        var userOptional = repository.findById(id);
+        UserResponseDto user = null;
+        if (userOptional.isPresent()) {
+            user = userMapper.toDto(userOptional.get());
+            repository.deleteById(id);
+        }
+        return user;
     }
 
     @Override
     public UserResponseDto findById(Long id) {
-        var user =  repository.findById(id).orElse(null);
+        var user = repository.findById(id).orElse(null);
         return userMapper.toDto(user);
     }
 
     @Override
     public List<UserResponseDto> findAll() {
-        return userMapper.toDtoList(repository.findAll());
+        return userMapper.toDtoList((List<User>) repository.findAll());
     }
 
     @Override

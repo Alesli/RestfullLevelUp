@@ -1,10 +1,14 @@
-package com.training.jmp.entity;
+package com.training.jmp.service.entity;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -28,11 +32,7 @@ public class User {
     @Column(name = "birthday")
     private LocalDate birthday;
 
-    public String getName() {
-        return name;
-    }
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Subscription> subscriptions;
 
-    public void setName(String name) {
-        this.name = name;
-    }
 }

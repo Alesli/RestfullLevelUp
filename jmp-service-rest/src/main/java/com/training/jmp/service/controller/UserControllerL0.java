@@ -1,11 +1,11 @@
-package com.training.jmp.service.rest.controller.impl;
+package com.training.jmp.service.controller;
 
-import com.training.jmp.dto.UserAction;
-import com.training.jmp.dto.UserRequest;
-import com.training.jmp.dto.UserRequestDto;
-import com.training.jmp.dto.UserResponseDto;
+import com.training.jmp.service.dto.UserAction;
+import com.training.jmp.service.dto.UserRequestDto;
+import com.training.jmp.service.dto.UserResponseDto;
 import com.training.jmp.service.UserRequestFailure;
 import com.training.jmp.service.UserService;
+import com.training.jmp.service.request.UserRequest;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -30,20 +30,23 @@ public class UserControllerL0 {
     @ApiResponses(value = {@ApiResponse(code = 201, message = "User created", response = UserRequestDto.class),
             @ApiResponse(code = 404, message = "User data not found")})
     public ResponseEntity<?> createUser(@RequestBody UserRequest userRequest) {
-        UserRequestDto userDto = userRequest.getUserRequestDto();
-        if (userDto == null) {
+        var user = userRequest.getUser();
+        if (user == null) {
             return ResponseEntity.ok().body(new UserRequestFailure("Body is empty"));
         }
-        UserAction action = userRequest.getAction();
+        var action = userRequest.getAction();
         switch (action) {
             case CREATE:
-                UserResponseDto createUser = userService.save(userDto);
+                var createUser = userService.save(user);
                 return ResponseEntity.ok(createUser);
             case DELETE:
-                userService.deleteById(userDto.getId());
-                return ResponseEntity.ok("Deleted");
+                var delUser = userService.deleteById(user.getId());
+                if (delUser == null) {
+                    return ResponseEntity.ok().body(new UserRequestFailure("User was not found"));
+                }
+                return ResponseEntity.ok(delUser);
             case GET:
-                UserResponseDto getUser = userService.findById(userDto.getId());
+                var getUser = userService.findById(user.getId());
                 if (getUser == null) {
                     return ResponseEntity.ok().body(new UserRequestFailure("User was not found"));
                 }

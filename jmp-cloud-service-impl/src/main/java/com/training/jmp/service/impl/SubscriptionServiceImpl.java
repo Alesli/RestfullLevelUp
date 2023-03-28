@@ -1,11 +1,11 @@
 package com.training.jmp.service.impl;
 
-import com.training.jmp.dto.SubscriptionRequestDto;
-import com.training.jmp.dto.SubscriptionResponseDto;
-import com.training.jmp.entity.Subscription;
-import com.training.jmp.mapper.SubscriptionMapper;
-import com.training.jmp.repo.SubscriptionRepository;
 import com.training.jmp.service.SubscriptionService;
+import com.training.jmp.service.dto.SubscriptionRequestDto;
+import com.training.jmp.service.dto.SubscriptionResponseDto;
+import com.training.jmp.service.entity.Subscription;
+import com.training.jmp.service.mapper.SubscriptionMapper;
+import com.training.jmp.service.repo.SubscriptionRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -27,8 +27,14 @@ public class SubscriptionServiceImpl implements SubscriptionService {
     }
 
     @Override
-    public void deleteById(Long id) {
-        repository.deleteById(id);
+    public SubscriptionResponseDto deleteById(Long id) {
+        var subscrOptional = repository.findById(id);
+        SubscriptionResponseDto subscription = null;
+        if (subscrOptional.isPresent()) {
+            subscription = subscriptionMapper.toDto(subscrOptional.get());
+            repository.deleteById(id);
+        }
+        return subscription;
     }
 
     @Override
@@ -39,7 +45,7 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 
     @Override
     public List<SubscriptionResponseDto> findAll() {
-        return subscriptionMapper.toDtoList(repository.findAll());
+        return subscriptionMapper.toDtoList((List<Subscription>) repository.findAll());
     }
 
     @Override

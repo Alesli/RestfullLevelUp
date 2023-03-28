@@ -1,8 +1,8 @@
-package com.training.jmp.mapper;
+package com.training.jmp.service.mapper;
 
-import com.training.jmp.dto.SubscriptionRequestDto;
-import com.training.jmp.dto.SubscriptionResponseDto;
-import com.training.jmp.entity.Subscription;
+import com.training.jmp.service.dto.SubscriptionRequestDto;
+import com.training.jmp.service.dto.SubscriptionResponseDto;
+import com.training.jmp.service.entity.Subscription;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
