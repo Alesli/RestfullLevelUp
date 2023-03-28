@@ -27,4 +27,12 @@ public class User {
 
     @Column(name = "birthday")
     private LocalDate birthday;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }

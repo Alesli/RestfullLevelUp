@@ -13,12 +13,11 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RequestMapping("/users")
+@RequestMapping("/l1/users")
 @RestController
 @AllArgsConstructor
 public class UserControllerL1 implements UserController {
     private final UserService userService;
-    private final UserMapper userMapper;
 
     @Override
     public ResponseEntity<UserResponseDto> createUser(UserRequestDto user) {

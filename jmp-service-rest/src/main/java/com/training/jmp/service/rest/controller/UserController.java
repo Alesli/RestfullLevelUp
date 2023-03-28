@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
-@Api(tags = "User API")
+@Api(value = "users")
 public interface UserController {
 
     @ApiOperation(response = UserResponseDto.class, value = "Add new user", produces = "application/json")

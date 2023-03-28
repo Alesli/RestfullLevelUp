@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
-@Api(tags = "Subscription API")
+@Api(value = "subscriptions")
 public interface ServiceController {
     @ApiOperation(response = SubscriptionRequestDto.class, value = "Add new Subscription", produces = "application/json")
     @ApiResponses(value = {@ApiResponse(code = 201, message = "Subscription created", response = SubscriptionRequestDto.class),

@@ -5,6 +5,7 @@ import com.training.jmp.dto.UserResponseDto;
 import com.training.jmp.service.UserService;
 import com.training.jmp.service.rest.controller.UserController;
 import lombok.AllArgsConstructor;
+import org.springframework.data.rest.core.annotation.RestResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,7 +14,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
 import java.util.List;
 
-@RequestMapping("/users")
+@RequestMapping("/level2")
 @RestController
 @AllArgsConstructor
 public class UserControllerImpl implements UserController {
