@@ -2,7 +2,6 @@ package com.training.jmp.service.rest.controller.impl;
 
 import com.training.jmp.dto.SubscriptionRequestDto;
 import com.training.jmp.dto.SubscriptionResponseDto;
-import com.training.jmp.mapper.SubscriptionMapper;
 import com.training.jmp.service.SubscriptionService;
 import com.training.jmp.service.rest.controller.ServiceController;
 import lombok.AllArgsConstructor;
@@ -19,7 +18,6 @@ import java.util.List;
 @AllArgsConstructor
 public class ServiceControllerImpl implements ServiceController {
     private final SubscriptionService subscriptionService;
-    private final SubscriptionMapper subscriptionMapper;
 
     @Override
     @PostMapping

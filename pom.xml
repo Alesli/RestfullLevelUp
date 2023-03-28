@@ -29,17 +29,12 @@
         <module>jmp-service-api</module>
         <module>jmp-service-rest</module>
         <module>jmp-cloud-service-impl</module>
-        <module>jmp-app</module>
     </modules>
 
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-autoconfigure</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
