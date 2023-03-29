@@ -25,6 +25,16 @@ public class Subscription {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @Column(name = "start_date")
+    @Column(name = "start_date", columnDefinition = "DATE")
     private LocalDate startDate;
+
+    @PrePersist
+    public void prePersist() {
+        startDate = LocalDate.now();
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        startDate = LocalDate.now();
+    }
 }

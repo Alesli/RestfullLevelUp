@@ -1,39 +1,32 @@
 package com.training.jmp.service.controller;
 
-import com.training.jmp.service.dto.SubscriptionRequestDto;
-import com.training.jmp.service.dto.SubscriptionResponseDto;
 import com.training.jmp.service.SubscriptionService;
+import com.training.jmp.service.dto.SubscriptionRequestDto;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
-import java.net.URI;
-import java.util.List;
 
 @RestController
-@RequestMapping("/level2/subscriptions")
+@RequestMapping("/v2.0/level2/subscriptions")
 @AllArgsConstructor
 public class ServiceControllerImpl implements ServiceController {
     private final SubscriptionService subscriptionService;
 
     @Override
-    @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<SubscriptionResponseDto> createSubscription(@RequestBody SubscriptionRequestDto subscriptionDto) {
+    @PostMapping(produces = "application/json")
+    public ResponseEntity<?> createSubscription(@RequestBody SubscriptionRequestDto subscriptionDto) {
         var subscription = subscriptionService.save(subscriptionDto);
         if (subscription != null) {
-            URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(subscription.getId()).toUri();
-            return ResponseEntity.created(location).build();
+            return new ResponseEntity<>(subscription, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
     @Override
-    @GetMapping("/{id}")
-    public @ResponseBody ResponseEntity<SubscriptionResponseDto> getSubscription(@PathVariable("id") Long id) {
+    @GetMapping(path = "/{id}", produces = "application/json")
+    public @ResponseBody ResponseEntity<?> getSubscription(@PathVariable("id") Long id) {
         var subscription = subscriptionService.findById(id);
         if (subscription != null) {
             return new ResponseEntity<>(subscription, HttpStatus.OK);
@@ -43,8 +36,8 @@ public class ServiceControllerImpl implements ServiceController {
     }
 
     @Override
-    @GetMapping
-    public ResponseEntity<List<SubscriptionResponseDto>> getAllSubscription() {
+    @GetMapping(produces = "application/json")
+    public @ResponseBody ResponseEntity<?> getAllSubscription() {
         var subscriptions = subscriptionService.findAll();
         if (subscriptions != null && !subscriptions.isEmpty()) {
             return new ResponseEntity<>(subscriptions, HttpStatus.OK);
@@ -54,8 +47,8 @@ public class ServiceControllerImpl implements ServiceController {
     }
 
     @Override
-    @DeleteMapping("/{id}")
-    public ResponseEntity<?> delete(@PathVariable("id") Long id) {
+    @DeleteMapping(path = "/{id}", produces = "application/json")
+    public @ResponseBody ResponseEntity<?> delete(@PathVariable("id") Long id) {
         var subscription = subscriptionService.deleteById(id);
         if (subscription != null) {
             return new ResponseEntity<>(subscription, HttpStatus.OK);
@@ -65,8 +58,8 @@ public class ServiceControllerImpl implements ServiceController {
     }
 
     @Override
-    @PutMapping("/{id}")
-    public ResponseEntity<SubscriptionResponseDto> updateSubscription(@RequestBody SubscriptionRequestDto subscriptionDto, @PathVariable("id") Long id) {
+    @PutMapping(path = "/{id}", produces = "application/json")
+    public ResponseEntity<?> updateSubscription(@RequestBody SubscriptionRequestDto subscriptionDto, @PathVariable("id") Long id) {
         if (subscriptionDto.getUserId() == null) {
             return ResponseEntity.badRequest().build();
         }

@@ -12,12 +12,11 @@ import java.util.List;
 public interface UserMapper {
 
     @Mapping(target = "birthday", source = "birthday", dateFormat = "yyyy-MM-dd")
+    @Mapping(target = "subscriptions", ignore = true)
     User toEntity(UserRequestDto user);
 
     @Mapping(target = "birthday", source = "birthday", dateFormat = "yyyy-MM-dd")
     UserResponseDto toDto(User user);
-
-    List<User> toEntityList(List<UserRequestDto> dtoList);
 
     List<UserResponseDto> toDtoList(List<User> entityList);
 

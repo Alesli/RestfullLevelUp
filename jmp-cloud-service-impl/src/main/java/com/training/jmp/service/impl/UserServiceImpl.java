@@ -52,6 +52,7 @@ public class UserServiceImpl implements UserService {
     public UserResponseDto update(UserRequestDto userDto, Long id) {
         Optional<User> optional = repository.findById(id);
         if (optional.isPresent()) {
+            userDto.setId(optional.get().getId());
             var user = userMapper.toEntity(userDto);
             return userMapper.toDto(repository.save(user));
         }

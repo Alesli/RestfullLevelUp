@@ -1,11 +1,10 @@
 package com.training.jmp.service.controller;
 
-import com.training.jmp.service.dto.UserAction;
+import com.training.jmp.service.UserService;
 import com.training.jmp.service.dto.UserRequestDto;
 import com.training.jmp.service.dto.UserResponseDto;
-import com.training.jmp.service.UserRequestFailure;
-import com.training.jmp.service.UserService;
 import com.training.jmp.service.request.UserRequest;
+import com.training.jmp.service.request.UserRequestFailure;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -18,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/level0")
+@RequestMapping("/v0.1/level0/users")
 @AllArgsConstructor
 @Api(value = "users")
 public class UserControllerL0 {
@@ -26,9 +25,9 @@ public class UserControllerL0 {
     private final UserService userService;
 
     @PostMapping(produces = "application/json")
-    @ApiOperation(response = UserResponseDto.class, value = "Add new user")
+    @ApiOperation(response = UserResponseDto.class, value = "Create new user")
     @ApiResponses(value = {@ApiResponse(code = 201, message = "User created", response = UserRequestDto.class),
-            @ApiResponse(code = 404, message = "User data not found")})
+            @ApiResponse(code = 404, message = "User data not found", response = UserRequestFailure.class)})
     public ResponseEntity<?> createUser(@RequestBody UserRequest userRequest) {
         var user = userRequest.getUser();
         if (user == null) {
@@ -53,7 +52,6 @@ public class UserControllerL0 {
                 return ResponseEntity.ok(getUser);
             default:
                 return ResponseEntity.ok().body(new UserRequestFailure("Body is empty"));
-
         }
     }
 }

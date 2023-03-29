@@ -44,6 +44,12 @@ public class SubscriptionServiceImpl implements SubscriptionService {
     }
 
     @Override
+    public List<SubscriptionResponseDto> findByUserId(Long userId) {
+        var subscriptions = repository.findByUserId(userId);
+        return subscriptionMapper.toDtoList(subscriptions);
+    }
+
+    @Override
     public List<SubscriptionResponseDto> findAll() {
         return subscriptionMapper.toDtoList((List<Subscription>) repository.findAll());
     }
@@ -52,6 +58,7 @@ public class SubscriptionServiceImpl implements SubscriptionService {
     public SubscriptionResponseDto update(SubscriptionRequestDto subscriptionDto, Long id) {
         Optional<Subscription> optional = repository.findById(id);
         if (optional.isPresent()) {
+            subscriptionDto.setId(optional.get().getId());
             var subscription = subscriptionMapper.toEntity(subscriptionDto);
             return subscriptionMapper.toDto(repository.save(subscription));
         }
