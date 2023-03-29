@@ -19,7 +19,5 @@ public interface SubscriptionMapper {
     @Mapping(target = "userId", source = "user")
     SubscriptionResponseDto toDto(Subscription subscription);
 
-    List<Subscription> toEntityList(List<SubscriptionRequestDto> dtoList);
-
     List<SubscriptionResponseDto> toDtoList(List<Subscription> entityList);
 }
