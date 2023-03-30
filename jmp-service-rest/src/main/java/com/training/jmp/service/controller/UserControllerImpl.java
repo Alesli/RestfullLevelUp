@@ -16,7 +16,7 @@ public class UserControllerImpl implements UserController {
     private final UserService userService;
 
     @Override
-    @GetMapping(path = "/{id}", produces = "application/json")
+    @RequestMapping(path = "/{id}", produces = "application/json", method = RequestMethod.POST)
     public ResponseEntity<?> getUser(@PathVariable("id") Long id) {
         var user = userService.findById(id);
         if (user != null) {
