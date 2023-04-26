@@ -16,7 +16,7 @@ public class UserControllerImpl implements UserController {
     private final UserService userService;
 
     @Override
-    @RequestMapping(path = "/{id}", produces = "application/json", method = RequestMethod.POST)
+    @GetMapping(path = "/{id}", produces = "application/json")
     public ResponseEntity<?> getUser(@PathVariable("id") Long id) {
         var user = userService.findById(id);
         if (user != null) {
@@ -28,7 +28,7 @@ public class UserControllerImpl implements UserController {
 
     @Override
     @GetMapping(produces = "application/json")
-    public @ResponseBody ResponseEntity<?> getAllUsers() {
+    public ResponseEntity<?> getAllUsers() {
         var users = userService.findAll();
         if (!CollectionUtils.isEmpty(users)) {
             return new ResponseEntity<>(users, HttpStatus.OK);
@@ -39,7 +39,7 @@ public class UserControllerImpl implements UserController {
 
     @Override
     @DeleteMapping(path = "/{id}", produces = "application/json")
-    public @ResponseBody ResponseEntity<?> deleteUser(@PathVariable("id") Long id) {
+    public ResponseEntity<?> deleteUser(@PathVariable("id") Long id) {
         var user = userService.deleteById(id);
         if (user != null) {
             return new ResponseEntity<>(user, HttpStatus.OK);

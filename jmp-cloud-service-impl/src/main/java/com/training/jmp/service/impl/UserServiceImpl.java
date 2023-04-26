@@ -55,7 +55,8 @@ public class UserServiceImpl implements UserService {
             userDto.setId(optional.get().getId());
             var user = userMapper.toEntity(userDto);
             return userMapper.toDto(repository.save(user));
+        } else {
+            return null;
         }
-        return null;
     }
 }
