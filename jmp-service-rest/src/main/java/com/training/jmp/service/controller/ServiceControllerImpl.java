@@ -26,7 +26,7 @@ public class ServiceControllerImpl implements ServiceController {
 
     @Override
     @GetMapping(path = "/{id}", produces = "application/json")
-    public @ResponseBody ResponseEntity<?> getSubscription(@PathVariable("id") Long id) {
+    public ResponseEntity<?> getSubscription(@PathVariable("id") Long id) {
         var subscription = subscriptionService.findById(id);
         if (subscription != null) {
             return new ResponseEntity<>(subscription, HttpStatus.OK);
@@ -37,7 +37,7 @@ public class ServiceControllerImpl implements ServiceController {
 
     @Override
     @GetMapping(produces = "application/json")
-    public @ResponseBody ResponseEntity<?> getAllSubscription() {
+    public ResponseEntity<?> getAllSubscription() {
         var subscriptions = subscriptionService.findAll();
         if (subscriptions != null && !subscriptions.isEmpty()) {
             return new ResponseEntity<>(subscriptions, HttpStatus.OK);
@@ -48,7 +48,7 @@ public class ServiceControllerImpl implements ServiceController {
 
     @Override
     @DeleteMapping(path = "/{id}", produces = "application/json")
-    public @ResponseBody ResponseEntity<?> delete(@PathVariable("id") Long id) {
+    public ResponseEntity<?> delete(@PathVariable("id") Long id) {
         var subscription = subscriptionService.deleteById(id);
         if (subscription != null) {
             return new ResponseEntity<>(subscription, HttpStatus.OK);
